@@ -1,5 +1,6 @@
+import { Dialog, DialogRef } from '@angular/cdk/dialog';
 import { Component } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import {  FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-formulario',
@@ -42,23 +43,18 @@ export class FormularioComponent {
   ]
   );
 
-  registerForms: FormGroup;
+  alumnoForms = new FormGroup({
+    nombre: this.nombreControl,
+    apellido: this.apellidoControl,
+    correo: this.emailControl,
+    curso: this.cursoControl,
+    pais: this.paisControl
+  })
 
-  constructor(public formBuilder: FormBuilder) {
-    this.registerForms = this.formBuilder.group({
-        nombre: this.nombreControl,
-        apellido: this.apellidoControl,
-        email: this.emailControl,
-        curso: this.cursoControl,
-    });
-  }
+  constructor(private dialogRef: DialogRef) {}
 
-  onSubmit(): void{
-    if (this.registerForms.valid){
-      console.log(this.registerForms.value);
-    } else [
-      alert('Error al llenar los campos')
-    ]
+  guardar():void {
+    this.dialogRef.close(this.alumnoForms.value)
   }
 
 }
